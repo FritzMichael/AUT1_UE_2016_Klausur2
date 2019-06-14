@@ -1,0 +1,81 @@
+\documentclass[crop=false]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{pdfpages}
+\usepackage{enumerate}
+\usepackage{amssymb}
+\usepackage[framemethod=default]{mdframed}
+\usepackage[nomarginpar,left=2cm,right=2cm,top = 2cm, bottom = 2cm]{geometry}
+
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\renewcommand{\thesubsubsection}{\thesection.\alph{subsection}.\roman{subsubsection}}
+
+\mdfdefinestyle{theoremstyle}{%
+linecolor=black,linewidth=.3pt,%
+frametitlerule=true,%
+frametitlebackgroundcolor=blue!5,
+innertopmargin=\topskip,nobreak=true,
+}
+
+\mdfdefinestyle{style2}{frametitle={},%
+             linewidth=.3pt,topline=true,backgroundcolor=blue!3!green!8!}
+
+\mdtheorem[style=theoremstyle]{task}{Angabe}
+
+\newmdenv[style = style2,title=false]{solution}
+
+\begin{document}
+\begin{task}[Stabilität und Linearisierung]
+Ein Ball liege auf einem Rad. Das Rad werde durch ein Drehmoment $M$ angetrieben.
+Durch die Drehung des Rades soll der Ball in der oberen Ruhelage balanciert werden.
+Die interessierende Ausgangsgröße sei der Winkel $\alpha$, um
+den der Ball von der Mitte abweicht. Mit nicht physikalisch motivierten Parametern erhält man die Differentialgleichungen zweiter Ordnung
+
+\[ 
+\begin{aligned} 3 \dot{\omega}-2 \ddot{\alpha} &=M \\-2 \dot{\omega}+3 \ddot{\alpha}-\frac{11}{2} \sin (\alpha) &=0 \end{aligned}
+ \]
+ 
+mit Drehmoment $M$ und Winkelgeschwindigkeit $\omega$. Der
+Winkel des Rades wird nicht modelliert.
+\emph{HINWEIS: Nebenstehende Skizze dient nur der Veranschaulichunq. Die Bewegunqsgleichungen sind gegeben.}
+
+ \begin{enumerate}[i]
+     \item Bringen Sie das nichtlineare System auf Zustandsdarstellung
+     \[ 
+\begin{aligned} \dot{\mathbf{x}} &=\mathbf{f}(\mathbf{x}, u) \\ y &=g(\mathbf{x}, u) \end{aligned}
+ \]
+ \begin{solution}
+ Da $\alpha$ der Ausgang des Systems sein soll, muss es jedenfalls im Zustandsvektor $\mathbf{x}$ vorkommen.
+ Es müssen die beiden gegebenen Gleichungen nach $\ddot{\alpha}$ und $\dot{\omega}$ aufgelöst werden.
+ 
+ \[\mathbf{x} = \begin{pmatrix} \alpha \\ \dot{\alpha} \\ \omega \end{pmatrix}, \quad 
+ \dot{\mathbf{x}} = \begin{pmatrix} \dot{\alpha} \\ \ddot{\alpha} \\ \dot{\omega} \end{pmatrix} = 
+ \begin{pmatrix} \dot{\alpha} \\ \frac{33}{10}\sin{\alpha} + \frac{2}{5} M\\ \frac{11}{5} \sin{\alpha} + \frac{3}{5} M  \end{pmatrix}
+ \]
+    \end{solution}
+ \item Berechnen Sie die stationäre Stellgröbe $u_{s}$ so, dass sich eine Ruhelage $\mathbf{x}_{s}$ mit
+$\alpha_{s}=0$ einstellt und geben Sie die Ruhelage $\mathbf{x}_{s}$ an.
+ \begin{solution}
+ \[ \mathbf{x}_s = \begin{pmatrix} \alpha_s \\ \dot{\alpha_s} \\ \omega \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}, \quad
+ \dot{\mathbf{x}_s} = \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix} = 
+ \begin{pmatrix} 0 \\ \frac{33}{10}\sin{0} + \frac{2}{5} M\\ \frac{11}{5} \sin{0} + \frac{3}{5} M  \end{pmatrix} \rightarrow  M = 0\]
+ 
+    \end{solution}
+\item Linearisieren Sie das System um die zuvor berechnete Ruhelage und geben Sie es
+in Zustandsdarstellung an:
+\[ 
+\begin{aligned} \Delta \dot{\mathbf{x}} &=\mathbf{A} \Delta \mathbf{x}+\mathbf{b} \Delta u \\ \Delta y &=\mathbf{c}^{T} \Delta \mathbf{x} \end{aligned}
+ \]
+\begin{solution}
+\[\mathbf{A} = \begin{pmatrix} 0 & 1 & 0 \\ \frac{33}{10} & 0 & 0 \\ \frac{11}{5} & 0 & 0\end{pmatrix},  \quad \mathbf{b} = \begin{pmatrix}0 \\ \frac{2}{5} \\ \frac{3}{5}\end{pmatrix}, \quad \mathbf{c}^T =  \begin{pmatrix}1 &0 &0\end{pmatrix}\]
+    \end{solution}
+    \item Beurteilen Sie die Stabilität der Ruhelage $\mathbf{x}_{s}$ von Punkt (ii) anhand des linearisierten Systems.
+\begin{solution}
+    \[\text{Det}\left( \mathbf{A} - \mathbf{E}\lambda \right) = - \lambda^3 + \lambda \frac{33}{10} \rightarrow \lambda_1 = 0, \quad \lambda_{2,3} = \pm \sqrt{\frac{33}{10}}\]
+    
+    Es existiert mindestens ein Eigenwert mit positiven Realteil, somit ist das System instabil.
+\end{solution}
+ \end{enumerate}
+\end{task}
+\end{document}

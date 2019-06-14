@@ -1,0 +1,53 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{pdfpages}
+\usepackage{enumerate}
+\usepackage{amssymb}
+\usepackage[framemethod=default]{mdframed}
+\usepackage[nomarginpar,left=2cm,right=2cm,top = 1.5cm, bottom = 1.5cm]{geometry}
+\usepackage{standalone}
+\usepackage{import}
+
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\renewcommand{\thesubsubsection}{\thesection.\alph{subsection}.\roman{subsubsection}}
+
+\mdfdefinestyle{theoremstyle}{%
+linecolor=black,linewidth=.3pt,%
+frametitlerule=true,%
+frametitlebackgroundcolor=blue!5,
+innertopmargin=\topskip,nobreak=true,
+}
+
+\mdfdefinestyle{theoremstylebreak}{%
+linecolor=black,linewidth=.3pt,%
+frametitlerule=true,%
+frametitlebackgroundcolor=blue!5,
+innertopmargin=\topskip,nobreak=false,
+}
+
+\mdfdefinestyle{style2}{frametitle={},%
+             linewidth=.3pt,topline=true,backgroundcolor=blue!3!green!8!}
+
+\mdtheorem[style=theoremstyle]{task}{Angabe}
+\mdtheorem[style=theoremstylebreak]{taskbreak}{Angabe}
+
+
+\newmdenv[style = style2,title=false]{solution}
+
+\begin{document}
+
+\includepdf[pages=-]{2016SS_2_Test_Aut1_UE}
+
+\import{Subfiles/}{Aufgabe1} %done
+\import{Subfiles/}{Aufgabe2}
+\import{Subfiles/}{Aufgabe3} %done
+\import{Subfiles/}{Aufgabe4} %done
+\import{Subfiles/}{Aufgabe5} %done
+\import{Subfiles/}{Aufgabe6} %done
+\import{Subfiles/}{Aufgabe7} %done
+\import{Subfiles/}{Aufgabe8} %done
+
+
+\end{document}

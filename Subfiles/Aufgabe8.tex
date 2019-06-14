@@ -1,0 +1,72 @@
+\documentclass[crop=false]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{pdfpages}
+\usepackage{enumerate}
+\usepackage{amssymb}
+\usepackage[framemethod=default]{mdframed}
+\usepackage[nomarginpar,left=2cm,right=2cm,top = 2cm, bottom = 2cm]{geometry}
+
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\renewcommand{\thesubsubsection}{\thesection.\alph{subsection}.\roman{subsubsection}}
+
+\mdfdefinestyle{theoremstyle}{%
+linecolor=black,linewidth=.3pt,%
+frametitlerule=true,%
+frametitlebackgroundcolor=blue!5,
+innertopmargin=\topskip,nobreak=true,
+}
+
+\mdfdefinestyle{style2}{frametitle={},%
+             linewidth=.3pt,topline=true,backgroundcolor=blue!3!green!8!}
+
+\mdtheorem[style=theoremstyle]{task}{Angabe}
+
+\newmdenv[style = style2,title=false]{solution}
+
+\begin{document}
+\begin{task}
+Zur Regelung des LTI-Systems
+\[ 
+\begin{aligned} \dot{\mathbf{x}} &=\left[\begin{array}{rr}{-1} & {1} \\ {-1} & {-1}\end{array}\right] \mathbf{x}+\left[\begin{array}{l}{2} \\ {1}\end{array}\right] u, \quad \mathbf{x}(0)=\mathbf{x}_{0} \\ y &=\left[\begin{array}{ll}{2} & {1}\end{array}\right] \mathbf{x} \end{aligned}
+ \]
+wird ein trivialer Beobachter zusammen mit dem Zustandsregler
+\[ 
+u=\mathbf{k}^{T} \hat{\mathbf{x}}+v=\left[\begin{array}{cc}{-1} & {-1}\end{array}\right] \hat{\mathbf{x}}+v
+ \]
+verwendet
+ \begin{enumerate}[i]
+     \item Geben Sie das Fehlersystem des trivialen Beobachters an, und berechnen Sie die Eigenwerte des Fehlersystems.
+     \begin{solution}
+     \[\dot{\mathbf{e}} = \mathbf{A} \mathbf{e}\]
+     Eigenwerte der Systemmatrix $\mathbf{A}$:
+     \[\text{det}\begin{pmatrix}-1-\lambda & 1 \\ -1 & -1-\lambda
+     \end{pmatrix}=
+     (-1-\lambda)^2+1 = 2 + 2 \lambda + \lambda ^2
+     \rightarrow \lambda_{1,2} = \frac{-2 \pm \sqrt{4 - 8}}{2} = -1 \pm i
+     \]
+     \end{solution}
+     \item Der Anfangswert des Systems sei nun $\mathbf{x}_{0}=\left[\begin{array}{ll}{3} & {0}\end{array}\right]^{T}$, und der triviale Beobachter wird mit $\mathbf{z}(0)=\mathbf{0}$ initialisiert. Berechnen Sie den Fehler $\mathbf{e}(t)=\mathbf{x}(t)-\mathbf{z}(t)$ für den Zeitpunkt $t=1 \mathrm{s}$.
+ \begin{solution}
+ Fragestellung: Wie klingt der anfängliche Fehler ab? Diese Frage ist vom Eingang $u$ unabhängig und deshalb ist dieser auch nicht angeführt.
+ 
+ Aufstellen der Transitionsmatrix:
+ \[ \Phi(t) = e^{-t} \begin{pmatrix} \cos{t} & \sin{t} \\ -\sin{t} & \cos{t}\end{pmatrix}; \quad \mathbf{e}(t=1) = \Phi(1) \ \mathbf{x}_0 = \begin{pmatrix}
+ 0.596\\-0.928
+ \end{pmatrix}\]
+ \end{solution}
+ \item Formulieren Sie den Zustandsregler zusammen mit dem Beobachter als ein dynamisches System der Form
+ \[ 
+\begin{aligned} \dot{\mathbf{z}} &=\overline{\mathbf{A}} \mathbf{z}+\overline{\mathbf{b}} v \\ u &=\overline{\mathbf{c}}^{T} \mathbf{z}+\overline{d} v \end{aligned}
+ \]
+ mit dem Eingang $v$ und dem Ausgang $u,$ und geben Sie die Matrizen $\overline{\mathbf{A}}, \overline{\mathbf{b}}, \overline{\mathbf{c}}^{T}$
+und $\overline{d}$ explizit an.
+\begin{solution}
+ Der triviale Beobachter ist lediglich eine Kopie der Strecke, der einzige Eingang entspricht dem Eingang der Strecke $\rightarrow v = u$. Da es sich nur um eine Kopie handelt, werden die Matrizen $\mathbf{A}$ und $\mathbf{b}$ natürlich übernommmen. In der Ausgangsgleichung wird der Zustandsregler realisiert.
+ 
+ \[\overline{\mathbf{A}} = \mathbf{A}, \quad \overline{\mathbf{b}} = \mathbf{b}, \quad \overline{\mathbf{c}}^T = \mathbf{k}^T = \begin{pmatrix}-1 & -1\end{pmatrix}, \quad \overline{d} = 0 \]
+\end{solution}
+ \end{enumerate}
+\end{task}
+\end{document}

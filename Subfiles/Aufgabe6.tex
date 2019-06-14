@@ -1,0 +1,80 @@
+\documentclass[crop=false]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{pdfpages}
+\usepackage{enumerate}
+\usepackage{amssymb}
+\usepackage[framemethod=default]{mdframed}
+\usepackage[nomarginpar,left=2cm,right=2cm,top = 2cm, bottom = 2cm]{geometry}
+
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\renewcommand{\thesubsubsection}{\thesection.\alph{subsection}.\roman{subsubsection}}
+
+\mdfdefinestyle{theoremstyle}{%
+linecolor=black,linewidth=.3pt,%
+frametitlerule=true,%
+frametitlebackgroundcolor=blue!5,
+innertopmargin=\topskip,nobreak=true,
+}
+
+\mdfdefinestyle{style2}{frametitle={},%
+             linewidth=.3pt,topline=true,backgroundcolor=blue!3!green!8!}
+
+\mdtheorem[style=theoremstyle]{task}{Angabe}
+
+\newmdenv[style = style2,title=false]{solution}
+
+\begin{document}
+\begin{task}
+Gegeben ist das LTI-System
+\[
+\begin{aligned} \dot{\mathbf{x}} &=\left[\begin{array}{cc}{-1} & {-4} \\ {1} & {3}\end{array}\right] \mathbf{x}+\left[\begin{array}{c}{3} \\ {-1}\end{array}\right] u \\ y &=\left[\begin{array}{cc}{0} & {2}\end{array}\right] \mathbf{x}-3 u \end{aligned}
+\]
+ \begin{enumerate}[i]
+     \item Zeigen Sie, dass das System vollständig beobachtbar ist, und entwerfen Sie einen
+vollständigen Beobachter so, dass die Eigenwerte des Fehlersystems bei $\{-2,-3\}$
+liegen.
+     \begin{solution}
+     Prüfen ob das System vollständig beobachtbar ist, ob $\mathcal{O}$ den ganzen $\mathbb{R}^2$ aufspannt:
+     \[\mathcal{O} = \text{span}\left\{
+     \begin{pmatrix}0 & 2\end{pmatrix},\begin{pmatrix}2 & 6\end{pmatrix}\right\} = \mathbb{R}^2 \]
+     Berechnen der Koeffizienten des gewünschten charakteristischen Polynoms:
+     \[p(s) = \left( s+3 \right) \left( s+2 \right) = s^2 + \alpha_1 s + \alpha_0 =s^2 + 5s + 6 \rightarrow \alpha_0 = 6, \ \alpha_1 = 5  \]
+     Berechnen des Vektors $\hat{\mathbf{t}}_1$:
+     \[
+     \mathbf{e}_2 = \mathbf{M}_O \hat{\mathbf{t}}_1 =
+     \begin{pmatrix}0 \\ 1\\\end{pmatrix} = 
+     \begin{pmatrix}0 & 2\\ 2 & 6\end{pmatrix}\hat{\mathbf{t}}_1
+     \rightarrow \hat{\mathbf{t}}_1 = \begin{pmatrix}\frac{1}{2} \\ 0\end{pmatrix}
+     \]
+     
+     Berechnung von $\hat{\mathbf{k}}$:
+     
+     \[\hat{\mathbf{k}} = - \alpha_0 \hat{\mathbf{t}}_1 - \alpha_1 \mathbf{A} \hat{\mathbf{t}}_1 - \mathbf{A}^2 \hat{\mathbf{t}}_1 = \begin{pmatrix} 1 \\ -\frac{7}{2}\end{pmatrix}\]
+     
+     Damit kann der vollständige Beobachter berechnet werden:
+     \[
+\begin{aligned} \dot{\mathbf{z}} &=\left(\mathbf{A}+\hat{\mathbf{k}} \mathbf{c}^{T}\right) \mathbf{z}+(\mathbf{b}+\hat{\mathbf{k}} d) u-\hat{\mathbf{k}} y \\ \hat{\mathbf{x}} &=\mathbf{E} \mathbf{z} \end{aligned} \quad \rightarrow 
+\begin{aligned} \dot{\mathbf{z}} &= 
+\begin{pmatrix}
+-1 & -2 \\ 1 & -4
+\end{pmatrix} \mathbf{z}+
+\begin{pmatrix}
+0 \\ \frac{19}{2}
+\end{pmatrix}
+u-
+\begin{pmatrix}
+1 \\ -\frac{7}{2}
+\end{pmatrix}
+y \\ \hat{\mathbf{x}} &=\mathbf{E} \mathbf{z} \end{aligned}
+\]
+     \end{solution}
+     \item Welche Gröben des Systems müssen Sie kennen, um den Beobachter aus Punkt
+(i) einsetzen zu können? Begründung!
+ \begin{solution}
+ Der Eingang $u$ und der Ausgang $y$ der Strecke sind Eingänge des Beobachters, müssen also bekannt sein. Zur Berechnung des Beobachters müssen $\mathbf{A}, \mathbf{b}, \mathbf{c}^T$ und $d$ bekannt sein. Also muss jede Größe des Beobachters bekannt sein, außer die Zustände $\mathbf{x}$ der Strecke.
+ \end{solution}
+ \end{enumerate}
+\end{task}
+\end{document}

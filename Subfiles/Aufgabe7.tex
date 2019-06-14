@@ -1,0 +1,103 @@
+\documentclass[crop=false]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{pdfpages}
+\usepackage{enumerate}
+\usepackage{amssymb}
+\usepackage[framemethod=default]{mdframed}
+\usepackage[nomarginpar,left=2cm,right=2cm,top = 2cm, bottom = 2cm]{geometry}
+
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\renewcommand{\thesubsubsection}{\thesection.\alph{subsection}.\roman{subsubsection}}
+
+\mdfdefinestyle{theoremstyle}{%
+linecolor=black,linewidth=.3pt,%
+frametitlerule=true,%
+frametitlebackgroundcolor=blue!5,
+innertopmargin=\topskip,nobreak=true,
+}
+
+\mdfdefinestyle{style2}{frametitle={},%
+             linewidth=.3pt,topline=true,backgroundcolor=blue!3!green!8!}
+
+\mdtheorem[style=theoremstyle]{task}{Angabe}
+
+\newmdenv[style = style2,title=false]{solution}
+
+\begin{document}
+\begin{task}
+Betrachten Sie das LTI-System
+\[
+\begin{aligned} \dot{\mathbf{x}} &=\mathbf{A} \mathbf{x}+\mathbf{b} u \\ y &=\mathbf{c}^{T} \mathbf{x} \end{aligned}
+\]
+Mit den Matrizen
+\[
+\mathbf{A}=\left[\begin{array}{ccc}{\alpha^{2}} & {5} & {0} \\ {0} & {\beta} & {0} \\ {0} & {-2} & {-\gamma^{2}}\end{array}\right], \quad \mathbf{b}=\left[\begin{array}{c}{4} \\ {0} \\ {-4}\end{array}\right], \quad \mathbf{c}^{T}=\left[\begin{array}{ccc}{0} & {0} & {2}\end{array}\right]
+\]
+und den Parametern $\alpha, \beta, \gamma \in \mathbb{R}$
+
+ \begin{enumerate}[i]
+     \item Zeigen Sie, dass der Unterraum $\mathcal{O} \subseteq\left(\mathbb{R}^{3}\right)^{*}$ unabhängig von Parametern
+$\alpha, \beta, \gamma$ ist. Geben Sie sowohl $\mathcal{O}$ als auch den nicht beobachtbaren Unterraum
+$\mathcal{O}^{\perp} \subseteq \mathbb{R}^{3}$ an.
+     \begin{solution}
+     \[\mathcal{O} = \text{span}\left\{ \mathbf{c}, \mathbf{c}^T \mathbf{A}, \mathbf{c}^T \mathbf{A}^2 \right\} = \text{span}\left\{ 
+     \begin{pmatrix}0 & 0 & 2\end{pmatrix},\begin{pmatrix}0 & -4 & -2\gamma^2\end{pmatrix},
+     \begin{pmatrix}0 & -4\beta+4\gamma^2 & 2\gamma^4\end{pmatrix}
+     \right\}
+     \]
+     Es handelt sich um 3 Vektoren, von denen keiner einen Eintrag im ersten Element hat $\rightarrow$ Sie müssen linear abhängig sein. Unabhängig von der Wahl der Parameter kann immer dieser Vektorraum aufgespannt werden:
+     \[ \mathcal{O} =\text{span}\left\{ 
+     \begin{pmatrix}0 & 0 & 1\end{pmatrix},\begin{pmatrix}0 & 1 & 0\end{pmatrix}
+     \right\} \]
+     Der Kern von $\mathbf{M}_O$ ergibt sich damit automatisch zu:
+     \[ \mathcal{O}^\perp=\text{Ker}(\mathbf{M}_O) = \begin{pmatrix}1\\0\\0\end{pmatrix}\]
+     \end{solution}
+     \item Existieren Parameterwerte $\alpha, \beta, \gamma$ so, dass es möglich ist für das System einen vollständigen Beobachter mit asymptotisch stabiler Fehlerdynamik zu entwerfen? Falls JA geben Sie den entsprechenden Parameterbereich an.
+     \emph{Begründen Sie Ihr Ergebnis ausführlich!}
+ \begin{solution}
+ Wie in Punkt (i) gezeigt, ist das System unabhängig von der Wahl der Parameter \emph{nicht} vollständig beobachtbar. Eine asymptotische Fehlerdynamik ist also nur möglich, wenn das System detektierbar ist.
+ 
+ Zerlegung in beobachtbares und nicht-beobachtbares Teilsystem:
+ \[ \mathbf{z} = \mathbf{V} \mathbf{x}, \quad \mathbf{x} = \mathbf{V}^{-1}\mathbf{z} , \quad \mathbf{V} = 
+ \begin{pmatrix} 
+ 0 & 0 & 1\\
+ 0 & 1 & 0\\
+ 1 & 0 & 0
+ \end{pmatrix},\quad
+ \mathbf{V}^{-1} = 
+ \begin{pmatrix} 
+ 0 & 0 & 1\\
+ 0 & 1 & 0\\
+ 1 & 0 & 0
+ \end{pmatrix}\]
+ \[
+ \begin{aligned}
+ \dot{\mathbf{z}} &= \mathbf{V} \mathbf{A} \mathbf{V}^{-1} \mathbf{z} + \mathbf{V} \mathbf{b} u\\
+ y &= \mathbf{c}^T \mathbf{V}^{-1} \mathbf{z}
+ \end{aligned} \rightarrow
+  \begin{aligned}
+ \dot{\mathbf{z}} &= 
+ \begin{pmatrix}
+ \gamma^2 & -2 & 0\\
+ 0 & \beta & 0\\
+ 0 & 5 & \alpha^2
+ \end{pmatrix} 
+ \mathbf{z} + 
+ \begin{pmatrix}
+ -4 \\ 0 \\ 4
+ \end{pmatrix}
+ u\\
+ y &=  \begin{pmatrix}
+ 2 & 0 & 0
+ \end{pmatrix} \mathbf{z}
+ \end{aligned}
+ \]
+ In dieser Transformation wurden die Zeilen der Gleichungen nur umsortiert. Nach dieser Umsortierung sieht man das der nicht-beobachtbare Zustand in der dritten Zeile steht. Gemessen wird nur der erste Zustand, der Zweite wirkt sich auf den Ersten aus. Der dritte Zustand hat jedoch keinerlei Einfluss auf den Ausgang und ist somit nicht beobachtbar. Dies könnte man auch schon ohne Transformation aus dem gegebenem System sehen.
+ 
+ Um Detektierbarkeit zu erfüllen müsste $\alpha^2$ eine (eindimensionale) Hurwitz-Matrix sein, also negativ. Da $\alpha \in \mathbb{R}$ ist, kann es kein $\alpha$ geben, dass diese Bedingung erfüllt.
+ \end{solution}
+ \end{enumerate}
+\end{task}
+\end{document}

@@ -9,6 +9,7 @@
 \usepackage[nomarginpar,left=2cm,right=2cm,top = 1.5cm, bottom = 1.5cm]{geometry}
 \usepackage{standalone}
 \usepackage{import}
+\usepackage{hyperref}
 
 \renewcommand{\thesubsection}{\thesection.\alph{subsection}}
 \renewcommand{\thesubsubsection}{\thesection.\alph{subsection}.\roman{subsubsection}}
@@ -36,12 +37,18 @@ innertopmargin=\topskip,nobreak=false,
 
 \newmdenv[style = style2,title=false]{solution}
 
+\mdfdefinestyle{style3}{frametitle={},%
+             linewidth=.3pt,topline=true,backgroundcolor=red!15}
+
+\newmdenv[style = style3,title=false]{disclaimer}
+
 \begin{document}
 
 \includepdf[pages=-]{2016SS_2_Test_Aut1_UE}
 
+\import{Subfiles/}{Disclaimer} %done
 \import{Subfiles/}{Aufgabe1} %done
-\import{Subfiles/}{Aufgabe2}
+\import{Subfiles/}{Aufgabe2} %done
 \import{Subfiles/}{Aufgabe3} %done
 \import{Subfiles/}{Aufgabe4} %done
 \import{Subfiles/}{Aufgabe5} %done
